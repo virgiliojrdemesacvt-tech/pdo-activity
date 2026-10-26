@@ -1,0 +1,133 @@
+-- ============================================================
+-- PDO Methods Activity - Australian Grocery Items
+-- Run in phpMyAdmin (XAMPP) or: mysql -u root < grocery_australia.sql
+-- Prices are sample data in Australian dollars (AUD)
+-- ============================================================
+CREATE DATABASE IF NOT EXISTS grocery_db
+  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE grocery_db;
+
+DROP TABLE IF EXISTS grocery_items;
+CREATE TABLE grocery_items (
+  item_id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  item_name        VARCHAR(100)  NOT NULL,
+  brand_name       VARCHAR(60)   NOT NULL,
+  category         VARCHAR(40)   NOT NULL,
+  package_size     VARCHAR(30)   NOT NULL,
+  price_aud        DECIMAL(6,2)  NOT NULL,
+  stock_quantity   INT UNSIGNED  NOT NULL DEFAULT 0,
+  country_of_origin VARCHAR(30)  NOT NULL DEFAULT 'Australia',
+  date_added       TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+INSERT INTO grocery_items (item_name, brand_name, category, package_size, price_aud, stock_quantity) VALUES
+-- Biscuits & Snacks
+('Tim Tam Original','Arnott''s','Biscuits & Snacks','175g',3.50,120),
+('Tim Tam Double Coat','Arnott''s','Biscuits & Snacks','175g',3.50,95),
+('Tim Tam Dark','Arnott''s','Biscuits & Snacks','175g',3.50,80),
+('Shapes Pizza','Arnott''s','Biscuits & Snacks','175g',3.20,70),
+('Shapes Barbecue','Arnott''s','Biscuits & Snacks','175g',3.20,64),
+('Shapes Chicken Crimpy','Arnott''s','Biscuits & Snacks','175g',3.20,58),
+('Jatz Original','Arnott''s','Biscuits & Snacks','225g',3.40,90),
+('Scotch Finger','Arnott''s','Biscuits & Snacks','250g',3.00,75),
+('Iced VoVo','Arnott''s','Biscuits & Snacks','200g',3.30,66),
+('Monte Carlo','Arnott''s','Biscuits & Snacks','250g',3.30,52),
+('Milk Arrowroot','Arnott''s','Biscuits & Snacks','250g',2.60,85),
+('Saos','Arnott''s','Biscuits & Snacks','250g',3.10,60),
+('Cheds Cheese Crackers','Arnott''s','Biscuits & Snacks','160g',3.00,47),
+('Tiny Teddy Chocolate','Arnott''s','Biscuits & Snacks','12 x 15g',4.00,55),
+('Mint Slice','Arnott''s','Biscuits & Snacks','200g',3.50,62),
+('Twisties Cheese','Twisties','Biscuits & Snacks','270g',4.00,73),
+('Cheezels Original','Cheezels','Biscuits & Snacks','125g',3.50,68),
+('Crinkle Cut Original Chips','Smith''s','Biscuits & Snacks','170g',4.00,88),
+('Crinkle Cut Chicken Chips','Smith''s','Biscuits & Snacks','170g',4.00,79),
+('Original Corn Chips','CC''s','Biscuits & Snacks','175g',3.80,61),
+('Sea Salt Chips','Red Rock Deli','Biscuits & Snacks','165g',4.50,44),
+-- Spreads & Condiments
+('Vegemite','Vegemite','Spreads & Condiments','380g',7.00,110),
+('Smooth Peanut Butter','Mayver''s','Spreads & Condiments','380g',5.50,48),
+('Smooth Peanut Butter','Sanitarium','Spreads & Condiments','375g',4.50,52),
+('Squeezable Pure Honey','Capilano','Spreads & Condiments','500g',9.00,40),
+('Pure Honey Jar','Capilano','Spreads & Condiments','500g',9.50,35),
+('Whole Egg Mayonnaise','Praise','Spreads & Condiments','445g',4.50,57),
+('Tomato Sauce','MasterFoods','Spreads & Condiments','500ml',3.50,96),
+('Barbecue Sauce','MasterFoods','Spreads & Condiments','500ml',3.50,84),
+('Tomato Sauce','Fountain','Spreads & Condiments','500ml',3.00,60),
+('Traditional Gravy Mix','Gravox','Spreads & Condiments','200g',3.50,45),
+('Curry Powder','Keen''s','Spreads & Condiments','55g',4.00,38),
+('Raspberry Jelly Crystals','Aeroplane Jelly','Spreads & Condiments','85g',1.50,130),
+-- Dairy
+('Full Cream Milk','Devondale','Dairy','2L',3.60,150),
+('Full Cream Milk','Pauls','Dairy','2L',3.60,140),
+('Full Cream Milk','Dairy Farmers','Dairy','2L',3.60,135),
+('Classic Full Cream Milk','Pura','Dairy','2L',3.60,125),
+('Chocolate Flavoured Milk','Big M','Dairy','600ml',3.00,90),
+('Iced Coffee','Dare','Dairy','500ml',3.80,100),
+('Iced Coffee','Farmers Union','Dairy','500ml',3.80,92),
+('Greek Style Yoghurt','Jalna','Dairy','1kg',7.00,34),
+('Greek Style Natural Yoghurt','Farmers Union','Dairy','1kg',7.50,30),
+('Tasty Cheese Block','Bega','Dairy','500g',8.00,72),
+('Tasty Cheese Slices','Bega','Dairy','250g',5.50,66),
+('Cheese Stringers','Bega','Dairy','12 x 20g',6.50,41),
+('Salted Butter','Western Star','Dairy','250g',4.50,77),
+('Salted Butter','Devondale','Dairy','250g',4.50,70),
+-- Beverages
+('Ginger Beer','Bundaberg','Beverages','375ml',3.00,115),
+('Lemon Lime & Bitters','Bundaberg','Beverages','375ml',3.00,98),
+('Root Beer','Bundaberg','Beverages','375ml',3.00,87),
+('Pineapple Juice','Golden Circle','Beverages','1L',3.20,64),
+('Orange Juice','Berri','Beverages','2L',4.50,58),
+('Orange Juice','nudie','Beverages','1L',5.00,36),
+('Raspberry Cordial','Cottee''s','Beverages','2L',4.50,42),
+('Lime Cordial','Bickford''s','Beverages','700ml',3.50,39),
+('Tea Bags','Bushells','Beverages','100 bags',6.00,83),
+('Coffee Bags','Robert Timms','Beverages','10 bags',5.50,46),
+('Still Spring Water','Mount Franklin','Beverages','600ml',2.50,200),
+('Raspberry Lemonade Kombucha','Remedy Kombucha','Beverages','330ml',3.50,50),
+-- Breakfast
+('Weet-Bix','Sanitarium','Breakfast','750g',5.50,105),
+('Up&Go Choc Ice','Sanitarium','Breakfast','250ml',2.00,120),
+('Almond Milk','So Good','Breakfast','1L',3.50,55),
+('Traditional Oats','Uncle Tobys','Breakfast','1kg',4.50,78),
+('Quick Oats Sachets Original','Uncle Tobys','Breakfast','10 sachets',4.50,49),
+('Vita Brits','Uncle Tobys','Breakfast','700g',5.50,63),
+('Roll-Ups Strawberry','Uncle Tobys','Breakfast','6 pack',3.50,71),
+('Fruit Free Muesli','Carman''s','Breakfast','500g',7.00,33),
+('Fruit & Nut Muesli Bars','Carman''s','Breakfast','6 pack',5.00,44),
+-- Bakery
+('The One White Sandwich Bread','Tip Top','Bakery','700g',3.50,96),
+('9 Grain Bread','Tip Top','Bakery','700g',3.80,82),
+('English Muffins','Tip Top','Bakery','6 pack',3.80,47),
+('Raisin Bread','Tip Top','Bakery','600g',4.00,38),
+('Wholemeal Sandwich Bread','Helga''s','Bakery','750g',4.00,59),
+('Multigrain Bread','Abbott''s Village Bakery','Bakery','750g',5.00,43),
+-- Canned & Pantry
+('Baked Beans in Tomato Sauce','SPC','Canned & Pantry','420g',1.80,160),
+('Spaghetti in Tomato Sauce','SPC','Canned & Pantry','420g',1.80,142),
+('Sliced Peaches in Juice','SPC','Canned & Pantry','700g',3.50,56),
+('Pineapple Slices in Juice','Golden Circle','Canned & Pantry','440g',2.80,61),
+('Sliced Beetroot','Golden Circle','Canned & Pantry','425g',2.50,67),
+('Diced Tomatoes','Ardmona','Canned & Pantry','400g',1.70,150),
+('Corn Kernels','Edgell','Canned & Pantry','420g',2.20,74),
+('Chickpeas','Edgell','Canned & Pantry','400g',1.50,88),
+('Medium Grain White Rice','SunRice','Canned & Pantry','1kg',3.50,92),
+('Jasmine Rice','SunRice','Canned & Pantry','1kg',4.50,81),
+('Extra Virgin Olive Oil','Cobram Estate','Canned & Pantry','750ml',15.00,29),
+('Chicken Style Stock Cubes','Massel','Canned & Pantry','105g',3.50,53),
+('Chicken Stock','Maggie Beer','Canned & Pantry','500ml',5.50,31),
+-- Confectionery
+('Snakes Alive','Allen''s','Confectionery','190g',3.50,90),
+('Party Mix','Allen''s','Confectionery','190g',3.50,85),
+('Red Skins','Allen''s','Confectionery','190g',3.50,76),
+('Fantales','Allen''s','Confectionery','180g',3.50,69),
+('Jelly Snakes','Natural Confectionery Co.','Confectionery','200g',3.50,72),
+('Soft Eating Liquorice Original','Darrell Lea','Confectionery','260g',5.50,40),
+('Violet Crumble Bar','Violet Crumble','Confectionery','50g',1.80,100),
+('Dark Chocolate Frog','Haigh''s Chocolates','Confectionery','100g',6.00,25),
+-- Frozen
+('Traditional Meat Pies','Four''N Twenty','Frozen','4 pack',5.50,60),
+('Party Pies','Mrs Macs','Frozen','24 pack',9.00,28),
+('Vanilla Drumstick','Peters','Frozen','4 pack',7.00,45),
+('Rainbow Paddle Pop','Streets','Frozen','8 pack',6.50,52),
+('Chicken Nuggets','Steggles','Frozen','1kg',9.50,37),
+('Blue Ribbon Classic Vanilla Ice Cream','Streets','Frozen','2L',7.00,34);
